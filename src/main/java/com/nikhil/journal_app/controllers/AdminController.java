@@ -2,9 +2,11 @@ package com.nikhil.journal_app.controllers;
 
 import com.nikhil.journal_app.entity.User;
 import com.nikhil.journal_app.services.UserService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,5 +30,15 @@ public class AdminController {
     @PostMapping("/create-admin-user")
     public void createAdminUser(@RequestBody User user){
         userService.saveAdmin(user);
+    }
+
+    @GetMapping("/details")
+    public ResponseEntity<User> getUserById(){
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        User admin = userService.findByUsername(name);
+        if(admin!=null){
+            return new ResponseEntity<>(admin, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

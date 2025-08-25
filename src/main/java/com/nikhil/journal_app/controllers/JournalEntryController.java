@@ -27,7 +27,7 @@ public class JournalEntryController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<?> getEntriesOfUser(){
+    public ResponseEntity<List<JournalEntry>> getEntriesOfUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findByUsername(authentication.getName());
         List<JournalEntry> journalEntries = user.getJournalEntries();
@@ -75,7 +75,7 @@ public class JournalEntryController {
     }
 
     @PutMapping("/id/{entryId}")
-    public ResponseEntity<?> updateEntryById(
+    public ResponseEntity<JournalEntry> updateEntryById(
             @PathVariable ObjectId entryId,
             @RequestBody JournalEntry newEntry
     ){
