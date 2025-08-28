@@ -1,5 +1,6 @@
 package com.nikhil.journal_app.entity;
 
+import com.nikhil.journal_app.enums.Sentiment;
 import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -12,7 +13,6 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 public class JournalEntry {
-
     @Id
     private ObjectId id;
 
@@ -22,4 +22,6 @@ public class JournalEntry {
     private String content;
 
     private LocalDateTime dateTime;
+
+    private Sentiment sentiment;
 }
